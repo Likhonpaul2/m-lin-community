@@ -1,30 +1,81 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import CoverImage from '../../../assets/register_cover.jpg';
 import { textStyle } from '../../../shared/Logo';
-import { FaApple, FaFacebook } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { AuthContext } from '../../../context/AuthContext';
+import toast from 'react-hot-toast';
 
 const Register = () => {
+    const { CreateUserWithEmailAndPassword, UpdateUserPhotoAndName } = useContext(AuthContext);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setError('');
+        setSuccess('');
+
+        const form = e.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        const confirmPassword = form.confirm_password.value;
+        const userPhoto = "";
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match.");
+            return;
+        }
+
+        CreateUserWithEmailAndPassword(email, password)
+            .then(() => {
+                UpdateUserPhotoAndName(name, userPhoto)
+                    .then(() => {
+                        toast.success("Account Create Successfully");
+                        navigate(location.state || "/");
+                    })
+                    .catch((error) => {
+                        toast.error("Account Create Unsuccessfully");
+                        console.log(error)
+                    })
+            })
+            .catch(error => {
+                if (error.code === "auth/email-already-in-use") {
+                    toast.error("Email already in use. Please use a different email.");
+                } else {
+                    toast.error("Registration failed. Please try again.");
+                }
+                console.log(error)
+            })
+
+
+        // TODO: Send data to backend or context method
+        console.log({ name, email, password });
+        setSuccess("Registered successfully!");
+        form.reset();
+
+
+    };
+
     return (
         <div className="min-h-screen grid grid-cols-1 md:grid-cols-2">
             {/* Left side with form */}
             <div className="flex flex-col justify-center items-center px-8">
                 <div className="w-full max-w-md">
-                    {/* Heading */}
                     <h2 className="text-xl mb-2">Start your journey</h2>
                     <h2 className={`text-4xl font-bold mb-8 ${textStyle}`}>Sign Up to MLin.</h2>
 
-                    {/* Form */}
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="mb-6">
                             <label className="block text-sm mb-2" htmlFor="name">Name</label>
                             <input
                                 type="text"
                                 id="name"
+                                name="name"
                                 placeholder="Full Name"
-                                name='name'
                                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
                             />
                         </div>
                         <div className="mb-6">
@@ -32,9 +83,10 @@ const Register = () => {
                             <input
                                 type="email"
                                 id="email"
+                                name="email"
                                 placeholder="example@email.com"
-                                name='email'
                                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
                             />
                         </div>
                         <div className="mb-6">
@@ -42,42 +94,43 @@ const Register = () => {
                             <input
                                 type="password"
                                 id="password"
+                                name="password"
                                 placeholder="********"
-                                name='password'
                                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
                             />
                         </div>
                         <div className="mb-6">
-                            <label className="block text-sm mb-2" htmlFor="password">Confirm Password</label>
+                            <label className="block text-sm mb-2" htmlFor="confirm_password">Confirm Password</label>
                             <input
                                 type="password"
-                                id="password"
+                                id="confirm_password"
+                                name="confirm_password"
                                 placeholder="********"
-                                name='confirm_password'
                                 className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
                             />
+                            {error && <p className="text-red-600 mt-2">{error}</p>}
+                            {success && <p className="text-green-600 mt-2">{success}</p>}
                         </div>
-                        <button className="w-full bg-blue-600 text-white p-3 rounded-md mb-4 hover:bg-blue-700 cursor-pointer font-bold">Sign Up</button>
+
+                        <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded-md mb-4 hover:bg-blue-700 font-bold">
+                            Sign Up
+                        </button>
                     </form>
 
-                    {/* Social Login */}
-                    {/* <div className="divider">Or</div>
-                    <div className="flex justify-center space-x-4 mb-8">
-                        <button className="p-3 bg-gray-100 rounded-full cursor-pointer"><FaFacebook size={25} className='text-blue-700 ' /></button>
-                        <button className="p-3 bg-gray-100 rounded-full cursor-pointer"><FcGoogle size={25} /></button>
-                        <button className="p-3 bg-gray-100 rounded-full cursor-pointer"><FaApple size={25} className='text-black' /></button>
-                    </div> */}
-
-                    {/* Sign In link */}
                     <p className="text-center text-sm">
-                        Have an account? <Link to={"/login"} href="#" className="text-blue-600 hover:underline">Sign in</Link>
+                        Have an account?{' '}
+                        <Link to="/login" className="text-blue-600 hover:underline">
+                            Sign in
+                        </Link>
                     </p>
                 </div>
             </div>
 
             {/* Right side with image */}
             <div className="hidden md:block">
-                <img src={CoverImage} alt="Cover" className="w-full h-screen object-cover " />
+                <img src={CoverImage} alt="Cover" className="w-full h-screen object-cover" />
             </div>
         </div>
     );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BsPeopleFill } from 'react-icons/bs';
 import { HiMiniHome } from 'react-icons/hi2';
 import { Link, NavLink } from 'react-router';
@@ -8,9 +8,11 @@ import { RxAvatar } from 'react-icons/rx';
 import { AiFillMessage } from 'react-icons/ai';
 import { IoNotifications } from 'react-icons/io5';
 import Logo from './Logo';
+import { AuthContext } from '../context/AuthContext';
 
 
 const Navbar = () => {
+    const { user } = useContext(AuthContext);
     // Improved button style
     const buttonStyle = "bg-gradient-to-r from-blue-500 to-purple-500 text-black font-semibold px-6 py-2 rounded-lg shadow  transition-transform duration-200 border-0 ";
 
@@ -104,7 +106,9 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end">
                     <div className="flex items-center space-x-4">
-                        <Button text={"Sign Up"} link={"/register"} />
+                        {
+                            user ? <></> : <Button text={"Sign Up"} link={"/register"} />
+                        }
                     </div>
                 </div>
             </div>
