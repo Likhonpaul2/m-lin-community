@@ -6,9 +6,9 @@ import MyNetworks from "../pages/my networks/MyNetworks";
 import JobPage from "../pages/jobs/JobPage";
 import MessagePage from "../pages/message/MessagePage";
 import NotificationPage from "../pages/notifications/NotificationPage";
-import ProfilePage from "../pages/notifications/ProfilePage";
 import LoginPage from "../pages/auth/login/LoginPage";
 import Register from "../pages/auth/register/Register";
+import ProfilePage from "../pages/profile/ProfilePage";
 
 
 export const router = createBrowserRouter([

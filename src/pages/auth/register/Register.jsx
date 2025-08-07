@@ -4,12 +4,21 @@ import { textStyle } from '../../../shared/Logo';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../../context/AuthContext';
 import toast from 'react-hot-toast';
+import Loading from '../../../shared/Loading';
 
 const Register = () => {
-    const { CreateUserWithEmailAndPassword, UpdateUserPhotoAndName } = useContext(AuthContext);
+    const { user, CreateUserWithEmailAndPassword, UpdateUserPhotoAndName } = useContext(AuthContext);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
+
+
+    if (user) {
+        navigate("/");
+    }
+    if (!user) {
+        return <Loading />
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();

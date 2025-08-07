@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { BsPeopleFill } from 'react-icons/bs';
 import { HiMiniHome } from 'react-icons/hi2';
 import { Link, NavLink } from 'react-router';
-import Button from './Button';
+import Button, { btnStyle, btnStyleSignOut } from './Button';
 import { MdBusinessCenter } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import { AiFillMessage } from 'react-icons/ai';
@@ -107,7 +107,7 @@ const Navbar = () => {
                 <div className="navbar-end">
                     <div className="flex items-center space-x-4">
                         {
-                            user ? <></> : <Button text={"Sign Up"} link={"/register"} />
+                            user ? <button className={`${btnStyleSignOut}`}>Sign Out</button> : <Button text={"Sign Up"} link={"/register"} />
                         }
                     </div>
                 </div>
