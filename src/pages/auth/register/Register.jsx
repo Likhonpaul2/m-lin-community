@@ -7,18 +7,12 @@ import toast from 'react-hot-toast';
 import Loading from '../../../shared/Loading';
 
 const Register = () => {
-    const { user, CreateUserWithEmailAndPassword, UpdateUserPhotoAndName } = useContext(AuthContext);
+    const { CreateUserWithEmailAndPassword, UpdateUserPhotoAndName } = useContext(AuthContext);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
 
 
-    if (user) {
-        navigate("/");
-    }
-    if (!user) {
-        return <Loading />
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -59,8 +53,6 @@ const Register = () => {
             })
 
 
-        // TODO: Send data to backend or context method
-        console.log({ name, email, password });
         setSuccess("Registered successfully!");
         form.reset();
 

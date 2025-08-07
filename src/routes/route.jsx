@@ -9,6 +9,7 @@ import NotificationPage from "../pages/notifications/NotificationPage";
 import LoginPage from "../pages/auth/login/LoginPage";
 import Register from "../pages/auth/register/Register";
 import ProfilePage from "../pages/profile/ProfilePage";
+import ProtectedRoute from "./ProtectedRoute";
 
 
 export const router = createBrowserRouter([
@@ -19,27 +20,27 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <HomePage />
+                element: <ProtectedRoute><HomePage /></ProtectedRoute>
             },
             {
                 path: "/networks",
-                element: <MyNetworks />
+                element: <ProtectedRoute><MyNetworks /></ProtectedRoute>
             },
             {
                 path: "/jobs",
-                element: <JobPage />
+                element: <ProtectedRoute><JobPage /></ProtectedRoute>
             },
             {
                 path: "/message",
-                element: <MessagePage />
+                element: <ProtectedRoute><MessagePage /></ProtectedRoute>
             },
             {
                 path: "/Notifications",
-                element: <NotificationPage />
+                element: <ProtectedRoute><NotificationPage /></ProtectedRoute>
             },
             {
                 path: "/profile",
-                element: <ProfilePage />
+                element: <ProtectedRoute><ProfilePage /></ProtectedRoute>
             },
 
 
@@ -48,7 +49,7 @@ export const router = createBrowserRouter([
     {
         path: "/login",
         element: <LoginPage />
-    }, 
+    },
     {
         path: "/register",
         element: <Register />

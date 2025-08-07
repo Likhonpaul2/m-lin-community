@@ -1,21 +1,102 @@
 import React, { useContext } from 'react';
 import { BsPeopleFill } from 'react-icons/bs';
 import { HiMiniHome } from 'react-icons/hi2';
-import { Link, NavLink } from 'react-router';
-import Button, { btnStyle, btnStyleSignOut } from './Button';
+import { Link, NavLink, useNavigate } from 'react-router';
+import Button, {btnStyleSignOut } from './Button';
 import { MdBusinessCenter } from 'react-icons/md';
 import { RxAvatar } from 'react-icons/rx';
 import { AiFillMessage } from 'react-icons/ai';
 import { IoNotifications } from 'react-icons/io5';
 import Logo from './Logo';
 import { AuthContext } from '../context/AuthContext';
+import toast from 'react-hot-toast';
 
 
 const Navbar = () => {
-    const { user } = useContext(AuthContext);
+    const { user, SignOut } = useContext(AuthContext);
+    const navigate = useNavigate();
     // Improved button style
     const buttonStyle = "bg-gradient-to-r from-blue-500 to-purple-500 text-black font-semibold px-6 py-2 rounded-lg shadow  transition-transform duration-200 border-0 ";
 
+    const handleSignOut = () => {
+        SignOut()
+            .then(() => {
+                toast.success("Logout Successfully");
+                navigate("/login");
+            })
+            .catch((err) => console.error(err));
+    }
+
+
+
+
+    // mobile screen navlinks 
+    const mobileNavLinks =
+        <>
+            <li>
+                <NavLink to={"/"} className={({ isActive }) =>
+                    isActive ? `${buttonStyle} ` : ""
+                }>
+                    <span className='tooltip tooltip-bottom' data-tip="Home">
+                        <HiMiniHome size={25} className='' />
+                    </span>
+                    Home
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to={"/networks"} className={({ isActive }) =>
+                    isActive ? `${buttonStyle}` : ""
+                }>
+                    <span className='tooltip tooltip-bottom' data-tip="My Networks">
+                        <BsPeopleFill size={25} className='' />
+                    </span>
+                    Networks
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to={"/jobs"} className={({ isActive }) =>
+                    isActive ? `${buttonStyle}` : ""
+                }>
+                    <span className='tooltip tooltip-bottom' data-tip="Jobs">
+                        <MdBusinessCenter size={25} className='' />
+                    </span>
+                    Jobs
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to={"/message"} className={({ isActive }) =>
+                    isActive ? `${buttonStyle}` : ""
+                }>
+                    <span className='tooltip tooltip-bottom' data-tip="Messages">
+                        <AiFillMessage size={25} className='' />
+                    </span>
+                    Messages
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to={"/Notifications"} className={({ isActive }) =>
+                    isActive ? `${buttonStyle}` : ""
+                }>
+                    <span className='tooltip tooltip-bottom' data-tip="Notifications">
+                        <IoNotifications size={25} className='' />
+                    </span>
+                    Notifications
+                </NavLink>
+            </li>
+            <li>
+                <NavLink to={"/profile"} className={({ isActive }) =>
+                    isActive ? `${buttonStyle}` : ""
+                }>
+                    <span className='tooltip tooltip-bottom' data-tip="My Profile">
+                        <RxAvatar size={25} className='' />
+                    </span>
+                    My Profile
+                </NavLink>
+            </li>
+        </>;
+
+
+    // large screen navlinks 
     const navLinks =
         <>
             <li>
@@ -89,7 +170,7 @@ const Navbar = () => {
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                            {navLinks}
+                            {mobileNavLinks}
                         </ul>
                     </div>
 
@@ -107,7 +188,7 @@ const Navbar = () => {
                 <div className="navbar-end">
                     <div className="flex items-center space-x-4">
                         {
-                            user ? <button className={`${btnStyleSignOut}`}>Sign Out</button> : <Button text={"Sign Up"} link={"/register"} />
+                            user ? <button onClick={handleSignOut} className={`${btnStyleSignOut}`}>Logout</button> : <Button text={"Sign Up"} link={"/register"} />
                         }
                     </div>
                 </div>

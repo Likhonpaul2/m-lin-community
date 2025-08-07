@@ -1,19 +1,28 @@
-import React from 'react';
+import Footer from '../shared/Footer';
 import Navbar from '../shared/Navbar';
-import { Outlet } from 'react-router';
+import { Navigate, Outlet } from 'react-router';
+
 
 const MainLayout = () => {
+
     return (
         <>
             <Navbar />
-            <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6">
+            <div className="container mx-auto px-4 mt-4">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-                    {/* Sidebar */}
-                    <aside className="lg:col-span-3 hidden lg:block  shadow-md p-4 rounded h-fit sticky top-20">
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur error nemo consectetur neque reprehenderit cumque optio non, eos maxime ut omnis laborum quod. Praesentium eum minus ullam natus autem delectus veniam aliquam inventore? Cumque laboriosam nostrum placeat voluptates delectus, aut animi, dolorem accusamus quisquam iusto quos, consectetur dignissimos est ullam! Excepturi animi voluptates voluptas dolorum optio provident eum suscipit, iure aut illo qui ad? Iusto neque totam esse eaque commodi tempora optio repellat! Cumque tempore et illum dolor maxime dolorum quisquam dignissimos, repellat dolores ducimus deserunt, ut, omnis cum rerum veniam. Quasi repellendus accusantium eaque. Corrupti voluptatibus esse rerum quo!
-                        </p>
+                    {/* Left Sidebar */}
+                    <aside className="lg:col-span-3 hidden lg:block sticky top-24 space-y-4">
+                        {/* Shortcut Links */}
+                        <div className="bg-base-100 shadow-md p-4 rounded-md">
+                            <h3 className="font-semibold mb-2">Quick Links</h3>
+                            <ul className="space-y-1 text-sm text-blue-600">
+                                <li><a href="#">My Network</a></li>
+                                <li><a href="#">Groups</a></li>
+                                <li><a href="#">Events</a></li>
+                                <li><a href="#">Followed Hashtags</a></li>
+                            </ul>
+                        </div>
                     </aside>
 
                     {/* Main Content */}
@@ -21,13 +30,31 @@ const MainLayout = () => {
                         <Outlet />
                     </main>
 
-                    {/* Optional Right Sidebar (like LinkedIn) */}
-                    <aside className="lg:col-span-3 hidden lg:block  shadow-md p-4 rounded h-fit sticky top-20">
-                        <p>Right Sidebar Content (ads, suggestions, news, etc.)</p>
+                    {/* Right Sidebar */}
+                    <aside className="lg:col-span-3 hidden lg:block sticky top-24 space-y-4">
+                        <div className="bg-base-100 shadow-md p-4 rounded-md">
+                            <h3 className="font-semibold mb-2">Add to your feed</h3>
+                            <ul className="space-y-3">
+                                <li className="text-sm">
+                                    <span className="font-medium">#reactjs</span><br />
+                                    <button className="mt-1 text-xs text-blue-600 hover:underline">Follow</button>
+                                </li>
+                                <li className="text-sm">
+                                    <span className="font-medium">#webdevelopment</span><br />
+                                    <button className="mt-1 text-xs text-blue-600 hover:underline">Follow</button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="bg-base-100 shadow-md p-4 rounded-md text-sm text-gray-500">
+                            <p>Ad Banner</p>
+                        </div>
                     </aside>
 
                 </div>
             </div>
+
+            <Footer/>
         </>
     );
 };

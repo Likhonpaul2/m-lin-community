@@ -9,15 +9,15 @@ import toast from 'react-hot-toast';
 import Loading from '../../../shared/Loading';
 
 const LoginPage = () => {
-    const { user, SignInEmailAndPass, SignInWithGoogle } = useContext(AuthContext);
+    const { user, loading, SignInEmailAndPass, SignInWithGoogle } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    if (user) {
-        navigate("/");
-    }
-    if (!user) {
-        return <Loading />
-    }
+    // if (user) {
+    //     navigate("/");
+    // }
+    // if (!loading) {
+    //     return <Loading />
+    // }
 
 
     const handleSubmit = (e) => {

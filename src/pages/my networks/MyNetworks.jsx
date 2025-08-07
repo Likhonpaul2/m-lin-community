@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+
 
 const mockConnections = [
   {
@@ -17,10 +16,10 @@ const mockConnections = [
 ];
 
 const MyNetworks = () => {
-  const { user } = useContext(AuthContext);
+
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
+    <div className="max-w-4xl mx-auto p-6 space-y-6 min-h-screen">
       <h2 className="text-2xl font-bold">My Network</h2>
 
       <div className="grid gap-4">

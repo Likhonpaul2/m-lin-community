@@ -26,7 +26,7 @@ const mockJobs = [
 
 const JobPage = () => {
   return (
-    <div className="max-w-5xl mx-auto p-6">
+    <div className="max-w-5xl mx-auto p-6 min-h-screen">
       <h2 className="text-2xl font-bold mb-4">Latest Job Opportunities</h2>
       <div className="grid gap-4">
         {mockJobs.map((job) => (

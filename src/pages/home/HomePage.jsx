@@ -60,21 +60,20 @@ const HomePage = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
-  
-  if(!user){
-    return <Loading/>
+
+  if (!user) {
+    return <Loading />;
   }
 
-
   return (
-    <div className="max-w-2xl mx-auto p-4">
+    <div className="max-w-2xl mx-auto p-4 sm:p-6 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-center">Public Post Feed</h1>
 
       {/* Create Post Form */}
-      <div className='bg-base-100 p-6 rounded-lg shadow-md mb-8'>
-        <h3 className='text-xl font-semibold text-center'>Create a Post</h3>
+      <div className="bg-base-100 p-6 rounded-lg shadow-md mb-8">
+        <h3 className="text-xl font-semibold text-center mb-4">Create a Post</h3>
 
-        <form onSubmit={handleSubmitPost} className='space-y-4'>
+        <form onSubmit={handleSubmitPost} className="space-y-4">
           <textarea
             name="post"
             id="post"
@@ -82,7 +81,7 @@ const HomePage = () => {
             className="w-full min-h-[120px] p-4 border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-black resize-none"
             required
           />
-          <div className='text-right'>
+          <div className="text-right">
             <button
               type="submit"
               className="px-6 py-2 rounded-md text-white font-semibold transition-all duration-300 ease-in-out bg-gradient-to-r from-blue-500 to-purple-500 hover:shadow-lg hover:shadow-purple-400"
@@ -99,15 +98,18 @@ const HomePage = () => {
           <p className="text-center text-gray-500">No posts yet. Be the first to post!</p>
         ) : (
           posts.map(({ _id, post, time, userName }) => (
-            <li key={_id} className="p-4 border border-gray-600 rounded-lg shadow-sm bg-base-100">
-              <div className="mb-2 flex items-center justify-between">
+            <li
+              key={_id}
+              className="p-4 border border-gray-600 rounded-lg shadow-sm bg-base-100 break-words"
+            >
+              <div className="mb-2 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                 <p className="font-semibold text-white">{userName || 'Anonymous'}</p>
-                <small className="text-white text-sm">{new Date(time).toLocaleString()}</small>
+                <small className="text-white text-sm whitespace-nowrap">{new Date(time).toLocaleString()}</small>
               </div>
 
-              <p className="text-white mb-4">{post}</p>
+              <p className="text-white mb-4 whitespace-pre-wrap">{post}</p>
 
-              <div className="flex justify-around border-t pt-2 text-sm text-gray-400">
+              <div className="flex flex-wrap justify-around border-t pt-2 text-sm text-gray-400 gap-4">
                 <button className={btnStyle}>👍 Like</button>
                 <button className={btnStyle}>💬 Comment</button>
                 <button className={btnStyle}>↗️ Share</button>
